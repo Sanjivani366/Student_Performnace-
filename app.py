@@ -57,7 +57,7 @@ st.markdown("""
 @st.cache_resource
 def load_model():
     try:
-        with open('model.pkl', 'rb') as f:
+        with open('kn.pkl', 'rb') as f:
             model = pickle.load(f)
         return model
     except FileNotFoundError:
