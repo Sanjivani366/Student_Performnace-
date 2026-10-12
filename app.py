@@ -27,7 +27,7 @@ st.markdown("""
     .stButton>button {
         width: 100%;
         background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
-        color: white;
+        color: black;
         font-weight: 600;
         border-radius: 8px;
         padding: 12px;
