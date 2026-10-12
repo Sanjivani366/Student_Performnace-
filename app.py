@@ -14,10 +14,10 @@ st.set_page_config(
 st.markdown("""
     <style>
     .main {
-        background-color: black;
+        background-color: #f1f5f9;
     }
     .card {
-        background-color: black;
+        background-color: #ffffff;
         padding: 30px;
         border-radius: 14px;
         box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
@@ -27,7 +27,7 @@ st.markdown("""
     .stButton>button {
         width: 100%;
         background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
-        color: black;
+        color: white;
         font-weight: 600;
         border-radius: 8px;
         padding: 12px;
@@ -42,18 +42,22 @@ st.markdown("""
     h1, h2, h3 {
         color: #0f172a;
     }
+    /* Specific styling to ensure the first headline is pure black */
+    .main-title {
+        color: #000000 !important;
+    }
     </style>
 """, unsafe_allow_html=True)
 
-# App Header Container
+# App Header Container with black text headline
 st.markdown("""
     <div class="card" style="text-align: center; background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);">
-        <h1>🎓 Student Performance Predictor</h1>
+        <h1 class="main-title">🎓 Student Performance Predictor</h1>
         <p style="color: #64748b; font-size: 1.1rem;">Predict student outcomes based on demographics, study habits, and learning environments.</p>
     </div>
 """, unsafe_allow_html=True)
 
-# Load model function (expects a saved KNeighborsRegressor model.pkl)
+# Load model function (expects a saved 'kn.pkl' file)
 @st.cache_resource
 def load_model():
     try:
@@ -95,9 +99,21 @@ with col2:
 st.markdown('<div class="card">', unsafe_allow_html=True)
 if st.button("Generate Prediction"):
     if model is None:
-        st.warning("⚠️ `model.pkl` not found. Please save your trained `KNeighborsRegressor` model as `model.pkl` in the root directory.")
+        st.warning("⚠️ `kn.pkl` not found. Please make sure your model file is in the root folder.")
     else:
-        # Example prediction pipeline execution placeholder
-        st.success("✅ Prediction computed successfully using KNeighborsRegressor!")
-        st.metric(label="Predicted Performance Score", value="84.5 / 100")
+        input_data = pd.DataFrame({
+            'age': [age],
+            'gender': [gender],
+            'course': [course],
+            'internet_access': [internet_access],
+            'study_hours': [study_hours],
+            'sleep_quality': [sleep_quality],
+            'study_method': [study_method],
+            'facility_rating': [facility_rating],
+            'exam_difficulty': [exam_difficulty]
+        })
+        
+        prediction = model.predict(input_data)[0]
+        st.success("✅ Prediction computed successfully!")
+        st.metric(label="Predicted Performance Score", value=f"{prediction:.2f} / 100")
 st.markdown('</div>', unsafe_allow_html=True)
