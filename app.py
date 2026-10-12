@@ -14,10 +14,10 @@ st.set_page_config(
 st.markdown("""
     <style>
     .main {
-        background-color: #f1f5f9;
+        background-color: black;
     }
     .card {
-        background-color: #ffffff;
+        background-color: black;
         padding: 30px;
         border-radius: 14px;
         box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
