@@ -49,7 +49,7 @@ st.markdown("""
 st.markdown("""
     <div class="card" style="text-align: center; background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);">
         <h1>🎓 Student Performance Predictor</h1>
-        <p style="color: #64748b; font-size: 1.1rem;">Predict student outcomes based on demographics, study habits, and learning environments[cite: 1].</p>
+        <p style="color: #64748b; font-size: 1.1rem;">Predict student outcomes based on demographics, study habits, and learning environments.</p>
     </div>
 """, unsafe_allow_html=True)
 
@@ -72,10 +72,10 @@ with col1:
     st.markdown('<div class="card">', unsafe_allow_html=True)
     st.subheader("📋 Student Demographics")
     
-    age = st.slider("Age", 15, 30, 20)[cite: 1]
-    gender = st.selectbox("Gender", ["Male", "Female", "Other"])[cite: 1]
-    course = st.selectbox("Course / Major", ["Computer Science", "Engineering", "Business", "Arts", "Science", "Medicine"])[cite: 1]
-    internet_access = st.selectbox("Internet Access", ["Yes", "No"])[cite: 1]
+    age = st.slider("Age", 15, 30, 20)
+    gender = st.selectbox("Gender", ["Male", "Female", "Other"])
+    course = st.selectbox("Course / Major", ["Computer Science", "Engineering", "Business", "Arts", "Science", "Medicine"])
+    internet_access = st.selectbox("Internet Access", ["Yes", "No"])
     
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -83,11 +83,11 @@ with col2:
     st.markdown('<div class="card">', unsafe_allow_html=True)
     st.subheader("📚 Study Habits & Environment")
     
-    study_hours = st.number_input("Weekly Study Hours", min_value=0.0, max_value=80.0, value=15.0, step=0.5)[cite: 1]
-    sleep_quality = st.selectbox("Sleep Quality", ["Poor", "Average", "Good", "Excellent"])[cite: 1]
-    study_method = st.selectbox("Study Method", ["Self-Study", "Group Study", "Online Courses", "Hybrid"])[cite: 1]
-    facility_rating = st.slider("Facility Rating (1-10)", 1, 10, 7)[cite: 1]
-    exam_difficulty = st.selectbox("Exam Difficulty", ["Easy", "Medium", "Hard"])[cite: 1]
+    study_hours = st.number_input("Weekly Study Hours", min_value=0.0, max_value=80.0, value=15.0, step=0.5)
+    sleep_quality = st.selectbox("Sleep Quality", ["Poor", "Average", "Good", "Excellent"])
+    study_method = st.selectbox("Study Method", ["Self-Study", "Group Study", "Online Courses", "Hybrid"])
+    facility_rating = st.slider("Facility Rating (1-10)", 1, 10, 7)
+    exam_difficulty = st.selectbox("Exam Difficulty", ["Easy", "Medium", "Hard"])
     
     st.markdown('</div>', unsafe_allow_html=True)
 
