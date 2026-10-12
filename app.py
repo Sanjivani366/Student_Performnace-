@@ -36,20 +36,19 @@ st.markdown("""
         transition: all 0.3s ease;
     }
     .stButton>button:hover {
-        background: linear-gradient(135deg, #4338ca 0%, #3730a3 100%);
+        background: linear-gradient(135deg, #4338ca 100%, #3730a3 100%);
         box-shadow: 0 6px 20px rgba(79, 70, 229, 0.5);
     }
     h1, h2, h3 {
         color: #0f172a;
     }
-    /* Specific styling to ensure the first headline is pure black */
     .main-title {
         color: #000000 !important;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# App Header Container with black text headline
+# App Header Container
 st.markdown("""
     <div class="card" style="text-align: center; background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);">
         <h1 class="main-title">🎓 Student Performance Predictor</h1>
@@ -57,7 +56,7 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# Load model function (expects a saved 'kn.pkl' file)
+# Load model function
 @st.cache_resource
 def load_model():
     try:
@@ -101,19 +100,34 @@ if st.button("Generate Prediction"):
     if model is None:
         st.warning("⚠️ `kn.pkl` not found. Please make sure your model file is in the root folder.")
     else:
-        input_data = pd.DataFrame({
-            'age': [age],
-            'gender': [gender],
-            'course': [course],
-            'internet_access': [internet_access],
-            'study_hours': [study_hours],
-            'sleep_quality': [sleep_quality],
-            'study_method': [study_method],
-            'facility_rating': [facility_rating],
-            'exam_difficulty': [exam_difficulty]
-        })
-        
-        prediction = model.predict(input_data)[0]
-        st.success("✅ Prediction computed successfully!")
-        st.metric(label="Predicted Performance Score", value=f"{prediction:.2f} / 100")
+        try:
+            # Map categorical inputs to numeric values (adjust mappings if your notebook used a different encoding)
+            gender_map = {"Male": 0, "Female": 1, "Other": 2}
+            course_map = {"Computer Science": 0, "Engineering": 1, "Business": 2, "Arts": 3, "Science": 4, "Medicine": 5}
+            internet_map = {"No": 0, "Yes": 1}
+            sleep_map = {"Poor": 0, "Average": 1, "Good": 2, "Excellent": 3}
+            method_map = {"Self-Study": 0, "Group Study": 1, "Online Courses": 2, "Hybrid": 3}
+            diff_map = {"Easy": 0, "Medium": 1, "Hard": 2}
+
+            # Construct feature array in the exact expected order
+            features = np.array([[
+                age,
+                gender_map[gender],
+                course_map[course],
+                internet_map[internet_access],
+                study_hours,
+                sleep_map[sleep_quality],
+                method_map[study_method],
+                facility_rating,
+                diff_map[exam_difficulty]
+            ]])
+            
+            # Predict using numpy array to bypass feature name validation errors
+            prediction = model.predict(features)[0]
+            
+            st.success("✅ Prediction computed successfully!")
+            st.metric(label="Predicted Performance Score", value=f"{prediction:.2f} / 100")
+            
+        except Exception as e:
+            st.error(f"Prediction error: {e}")
 st.markdown('</div>', unsafe_allow_html=True)
